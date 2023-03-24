@@ -1,4 +1,7 @@
 <script>
+
+  import { setAssetPath } from "@esri/calcite-components/dist/components";
+  setAssetPath("https://unpkg.com/@esri/calcite-components/dist/calcite/assets"); 
   // calcite components
   import "@esri/calcite-components/dist/components/calcite-shell";
   import "@esri/calcite-components/dist/components/calcite-shell-panel";
@@ -17,8 +20,8 @@
   import LayerList from "@arcgis/core/widgets/LayerList";
   import Legend from "@arcgis/core/widgets/Legend";
   import Print from "@arcgis/core/widgets/Print";
-  import { onMount } from "svelte";
-
+ import esriId from "@arcgis/core/identity/IdentityManager";
+ 
   config.apiKey = import.meta.env.VITE_API_KEY;
 
   let viewContainer;
@@ -114,7 +117,7 @@
     <!-- Dynamically populated -->
     { token ? item.title || "...loading" : "Ingresa tu token:"}
     <input bind:value={token}>
-    <button on:click={() =>  initMap()}>Init</button>
+    <button on:click={() => initMap()}>Init</button>
   </h2>
   <calcite-shell-panel slot="primary-panel" detached>
     <calcite-action-bar slot="action-bar" on:click={handleActionBarClick}>
