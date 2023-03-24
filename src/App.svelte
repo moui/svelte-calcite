@@ -29,12 +29,24 @@
   let legendContainer;
   let printContainer;
 
+  let token;
+
   let item = {};
 
-  onMount(() => {
+  config.portalUrl = "https://mapas-qa.montesdelplata.com.uy/portal"
+
+  function initMap(){
+    esriId.registerToken({
+      server: "https://mapas-qa.montesdelplata.com.uy/portal/sharing/rest",
+      token: token,
+    });
+
+    console.log("token", token)
+    console.log(esriId.toJSON())
+
     const map = new WebMap({
       portalItem: {
-        id: "cc3bd744b9a44feaa493dd867a1d48dd",
+        id: "e471b90ad80041c79fdf17a3bc865f81",
       },
     });
     const view = new MapView({
@@ -72,7 +84,7 @@
     map.when(() => {
       item = map.portalItem;
     });
-  });
+  };
 
   let activeWidget;
 
@@ -100,7 +112,9 @@
 <calcite-shell content-behind>
   <h2 id="header-title" slot="header">
     <!-- Dynamically populated -->
-    {item.title || "...loading"}
+    { token ? item.title || "...loading" : "Ingresa tu token:"}
+    <input bind:value={token}>
+    <button on:click={() =>  initMap()}>Init</button>
   </h2>
   <calcite-shell-panel slot="primary-panel" detached>
     <calcite-action-bar slot="action-bar" on:click={handleActionBarClick}>
